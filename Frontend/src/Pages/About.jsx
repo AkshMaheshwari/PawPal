@@ -1,6 +1,7 @@
 import React from 'react';
 import ValueCard from '../Components/ValueCard';
 import TeamCard from '../Components/TeamCard';
+import Adoption from '../Components/Adoption';
 import { Heart, ShieldCheck, Star, Users } from 'lucide-react';
 
 const values = [
@@ -53,6 +54,40 @@ const team = [
   },
 ];
 
+const stories = [
+  {
+    image: '/Buddy.png',
+    title: "Buddy finds his forever home",
+    content: "Buddy, a rescued beagle, spent months at our shelter before being adopted by the Thompson family. He now enjoys a loving home with plenty of space to play and a family who adores him.",
+  },
+  {
+    image: '/Simba.webp',
+    title: "Simba's Second Chance",
+    content: "Simba, a playful orange tabby, was found abandoned in a cardboard box. After receiving medical care and lots of love at our shelter, he was adopted by a family who fell in love with his charming personality."
+  },
+  {
+    image: '/Rocky.png',
+    title: "Rocky's Journey to Happiness",
+    content: "Rocky, a formerly abused German Shepherd, was nursed back to health at our shelter. He was adopted by a retired couple who provide him with the love and care he deserves."
+  },
+  {
+    image: '/Mittens.png',
+    title: "Mittens new life",
+    content: "Mittens, a shy calico cat, found her confidence and a loving home with a young professional who provides her with a quiet and comfortable environment."
+  },
+  {
+    image: '/Luna.webp',
+    title: "Luna's Leap of Faith",
+    content:
+      "Luna, a timid grey kitten, was rescued from the streets during a heavy rainstorm. After weeks of gentle care, she warmed up to humans and found her forever family with a kind couple who adore her playful spirit.",
+  },
+  {
+    image: '/Max.webp',
+    title: "Max's Tail of Triumph",
+    content:
+      "Max, a senior Golden Retriever, was surrendered due to his age. Despite this, his gentle nature won over a loving family who now give him the golden years he truly deserves.",
+  },
+];
 const About = () => {
   return (
     <div className="bg-white text-gray-800 font-sans">
@@ -131,6 +166,25 @@ const About = () => {
           ))}
         </div>
       </section>
+      {/*Adoption Section*/ }
+      <section className="py-16 bg-white">
+        
+
+        <div>
+          <Adoption stories={stories} />
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-100 text-center p-6 text-sm text-gray-500">
+        <p>&copy; 2025 PawPal. All rights reserved.</p>
+        <div className="mt-2 space-x-4">
+          <a href="/privacy" className="hover:underline">Privacy Policy</a>
+          <a href="/terms" className="hover:underline">Terms of Service</a>
+          <a href="/contact" className="hover:underline">Contact</a>
+        </div>
+      </footer>
+    
     </div>
   );
 };
