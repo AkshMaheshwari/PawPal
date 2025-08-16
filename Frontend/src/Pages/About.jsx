@@ -114,9 +114,7 @@ const About = () => {
 
       {/* Mission Section */}
       <section className="p-8 md:p-16 bg-gray-50">
-        <h2 className="text-4xl font-bold mb-6 text-center text-gray-900 leading-tight">
-          Our Mission
-        </h2>
+        <h1 className="text-4xl font-bold text-yellow-600 mb-2 text-center py-5">Our mission</h1>
         <p className="max-w-2xl mx-auto text-lg text-gray-700 leading-relaxed text-center mb-6">
           At <span className="font-semibold text-yellow-600">PawPal</span>, our mission is to provide a safe haven for abandoned, abused, and neglected animals. 
           We are dedicated to finding loving, permanent homes for every animal in our care, ensuring their well-being and happiness. 
@@ -160,7 +158,7 @@ const About = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto px-4">
           {team.map((member, idx) => (
             <TeamCard key={idx} {...member} />
           ))}

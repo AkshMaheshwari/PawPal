@@ -2,7 +2,7 @@ import React from 'react';
 
 const TeamCard = ({ name, role, image }) => {
   return (
-    <div className="bg-white shadow-md p-4 text-center">
+    <div className="bg-white shadow-md p-4 text-center hover:shadow-lg transition-shadow duration-300">
       <img
         src={image}
         alt={name}

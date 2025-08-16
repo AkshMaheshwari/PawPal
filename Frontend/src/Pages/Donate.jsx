@@ -1,33 +1,11 @@
-import React from 'react'
-import DonateSection from '../Components/DonateSection.jsx'
-import { Heart, ShieldCheck, Star } from 'lucide-react';
-
-function handleClick() {
-  window.location.href = "/donate";
-}
-
-const donateOptions = [
-  {
-    icon: Heart,
-    title: "Food and Supplies",
-    description: "Your donation helps us provide essential food and supplies for our animals."
-  },
-  {
-    icon: ShieldCheck,
-    title: "Medical Care",
-    description: "Your support ensures that our animals receive the medical care they need."
-  },
-  {
-    icon: Star,
-    title: "Shelter and Comfort",
-    description: "Help us provide a safe and comfortable shelter for our animals."
-  }
-];
+import React from "react";
+import { motion } from "framer-motion";
+import { Heart, Home, Stethoscope } from "lucide-react";
 
 const Donate = () => {
   return (
-    <div className="bg-white text-gray-800 font-sans">
-      {/* Header */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Navbar */}
       <header className="sticky top-0 z-50 bg-white shadow-md">
         <div className="container mx-auto flex justify-between items-center p-4">
           <h1 className="text-2xl font-extrabold text-yellow-600 tracking-tight">
@@ -48,46 +26,112 @@ const Donate = () => {
         </div>
       </header>
 
-      {/* Support Our Mission */}
-      <section className="p-8 md:p-16 bg-gray-50">
-        <h2 className="text-4xl font-bold mb-6 text-center text-gray-900 leading-tight">
-          Support Our Mission
-        </h2>
-        <p className="max-w-2xl mx-auto text-lg text-gray-700 leading-relaxed text-center mb-6">
-          Your generous donation helps us provide care, shelter, and love to animals in need. Every contribution, no matter the size, makes a significant difference in their lives.
-        </p>
-        <button
-          className="block mx-auto px-4 py-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-700 font-semibold"
-          onClick={handleClick}
-        >
-          Donate Now
-        </button>
-      </section>
-
-      {/* How Your Donation Helps */}
-      <section className="p-8 md:p-16 bg-gray-50">
-        <h2 className="text-4xl font-bold mb-6 text-center text-gray-900 leading-tight">
-          How Your Donation Helps
-        </h2>
-        <p className="max-w-2xl mx-auto text-lg text-gray-700 leading-relaxed text-center mb-6">
-          Your support directly impacts the lives of animals in our care. Here's how your donation makes a difference:
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {donateOptions.map((item, index) => (
-            <div
-              key={index}
-              className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300"
-            >
-              <DonateSection
-                icon={item.icon}
-                title={item.title}
-                description={item.description}
-              />
-            </div>
-          ))}
+      {/* Page Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex flex-col items-center py-10 px-4"
+      >
+        {/* Header */}
+        <div className="max-w-3xl text-center mb-10">
+          <h1 className="text-4xl font-bold text-yellow-600 mb-2">Support PawPal</h1>
+          <p className="text-gray-600">
+            Your generous donations help us provide food, shelter, and medical care
+            to animals in need.
+          </p>
         </div>
-      </section>
+
+        {/* Layout Grid */}
+        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl w-full">
+          {/* Impact Section */}
+          <div className="bg-white shadow-lg rounded-2xl p-6 space-y-6">
+            <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
+              <Heart className="text-yellow-500" /> Your Impact
+            </h2>
+            <div className="space-y-4 text-gray-700">
+              <div className="flex items-center gap-3">
+                <Home className="text-yellow-500" /> Shelter and care for rescued pets
+              </div>
+              <div className="flex items-center gap-3">
+                <Stethoscope className="text-yellow-500" /> Medical treatment & vaccinations
+              </div>
+              <div className="flex items-center gap-3">
+                <Heart className="text-yellow-500" /> Nutritious food and daily supplies
+              </div>
+            </div>
+          </div>
+
+          {/* Donation Form */}
+          <div className="lg:col-span-2">
+            <form className="bg-white shadow-lg rounded-2xl p-8 space-y-6">
+              {/* Preset Donation Options */}
+              <div>
+                <h3 className="text-lg font-medium text-gray-700 mb-3">Choose Amount</h3>
+                <div className="flex flex-wrap gap-3">
+                  {[500, 1000, 2000, 5000].map((amt) => (
+                    <button
+                      key={amt}
+                      type="button"
+                      className="px-4 py-2 rounded-lg border border-gray-300 hover:border-yellow-500 hover:bg-yellow-50 transition font-semibold"
+                    >
+                      ₹{amt}
+                    </button>
+                  ))}
+                  <input
+                    type="number"
+                    placeholder="Custom Amount"
+                    className="flex-1 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
+                  />
+                </div>
+              </div>
+
+              {/* Donor Info */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="you@example.com"
+                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
+                  />
+                </div>
+              </div>
+
+              {/* Payment Info Placeholder */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Payment Method
+                </label>
+                <select className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition">
+                  <option>UPI</option>
+                  <option>Credit/Debit Card</option>
+                  <option>Net Banking</option>
+                </select>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 rounded-lg shadow-md transition"
+              >
+                Donate Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 };
