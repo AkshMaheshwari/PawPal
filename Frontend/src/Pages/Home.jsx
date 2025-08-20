@@ -24,7 +24,7 @@ export default function Home() {
             <a href="/contact" className="hover:text-yellow-600">Contact</a>
             <a href="/donate" className="hover:text-yellow-600">Donate</a>
             <a
-              href="/auth/google"
+              href="/signup"
               className="inline-block px-4 py-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 font-semibold"
             >
               Get Started
