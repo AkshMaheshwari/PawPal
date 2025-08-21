@@ -5,6 +5,7 @@ import Adoption from '../Components/Adoption';
 import { Heart, ShieldCheck, Star, Users } from 'lucide-react';
 import { FaPaw } from 'react-icons/fa';
 
+
 const values = [
   {
     icon: Heart,
@@ -123,9 +124,7 @@ const About = () => {
       {/* Mission Section */}
       <section className="pt-28 pb-20 px-6 relative overflow-hidden">
         <div className="container mx-auto relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm text-yellow-700 px-4 py-2 rounded-full text-sm font-medium shadow-md mb-6">
-            Our Mission
-          </div>
+          
           <h1 className="text-5xl font-bold leading-tight mb-6">
             Giving Every Animal a{' '}
             <span className="bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
@@ -147,9 +146,12 @@ const About = () => {
       <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Our <span className="text-yellow-600">Values</span>
-            </h2>
+            <h1 className="text-5xl font-bold leading-tight mb-6">
+            Our {' '}
+            <span className="bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+              Values
+            </span>
+          </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Guided by principles that shape our work and our bond with animals and the community.
             </p>
@@ -165,7 +167,12 @@ const About = () => {
       {/* Team Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">Meet Our <span className="text-yellow-600">Team</span></h2>
+         <h1 className="text-5xl font-bold leading-tight mb-6">
+            Meet Our {' '}
+            <span className="bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+              Team
+            </span>
+          </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
             Passionate individuals working together for the welfare of animals.
           </p>
@@ -187,16 +194,47 @@ const About = () => {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-16">
         <div className="container mx-auto px-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center">
-              <FaPaw className="text-white text-lg" />
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center">
+                  <FaPaw className="text-white text-lg" />
+                </div>
+                <h3 className="text-2xl font-bold text-yellow-500">PawPal</h3>
+              </div>
+              <p className="text-gray-400 leading-relaxed">
+                Making pet adoption simple, safe, and successful for everyone involved.
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-yellow-500">PawPal</h3>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <div className="space-y-2">
+                <a href="/about" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">About Us</a>
+                <a href="/pets" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Find Pets</a>
+                <a href="/contact" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Contact</a>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Support</h4>
+              <div className="space-y-2">
+                <a href="/donate" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Donate</a>
+                <a href="/volunteer" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Volunteer</a>
+                <a href="/faq" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">FAQ</a>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Legal</h4>
+              <div className="space-y-2">
+                <a href="/privacy" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Privacy Policy</a>
+                <a href="/terms" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Terms of Service</a>
+              </div>
+            </div>
           </div>
-          <p className="text-gray-400 leading-relaxed max-w-lg">
-            Dedicated to giving every pet a chance to find their forever home. Together, we create a compassionate world.
-          </p>
-          <div className="mt-8 border-t border-gray-800 pt-6 text-center">
+          
+          <div className="border-t border-gray-800 pt-8 text-center">
             <p className="text-gray-400">&copy; 2025 PawPal. All rights reserved. Made with ❤️ for animals in need.</p>
           </div>
         </div>

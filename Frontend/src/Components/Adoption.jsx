@@ -5,9 +5,12 @@ const Adoption = ({ stories }) => {
     <section className="py-12 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Title */}
-        <h2 className="text-4xl font-bold text-center text-gray-900 mb-10">
-          Adoption Stories
-        </h2>
+        <h1 className="text-5xl font-bold leading-tight mb-6 text-center">
+            Adoption{' '}
+            <span className="bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+              Stories
+            </span>
+          </h1>
 
         {/* Grid Layout */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

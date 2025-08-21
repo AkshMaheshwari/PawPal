@@ -1,22 +1,25 @@
-import express from "express";
-import dotenv from "dotenv";
-import connectDB from "./Models/db.js";
-
-dotenv.config(); // load env variables
-
+// Backend/index.js
+import dotenv from 'dotenv';
+dotenv.config();                           
+import express from 'express';
 const app = express();
-const PORT = process.env.PORT || 5000;
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import connectDB from './Models/db.js'; 
+import AuthRouter from './Routes/AuthRouter.js';   
 
-// connect to MongoDB
+
+app.use(cors());
+const PORT = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Initialize database connection
 connectDB();
 
-app.use(express.json());
-
-// test route
-app.get("/", (req, res) => {
-  res.send("PawPal API running 🚀");
-});
+app.use("/Auth", AuthRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`✅ Server is running on port ${PORT}`);
 });
