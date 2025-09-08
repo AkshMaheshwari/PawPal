@@ -7,6 +7,7 @@ import Donate from './pages/Donate';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Welcome from './pages/Welcome';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/welcome" element={<Welcome />} />
       </Routes>
     </Router>
   );

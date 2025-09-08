@@ -38,7 +38,7 @@ const Login = () => {
       localStorage.setItem("username", data.user.name);
       localStorage.setItem("token", data.token);
       toast.success('Login successful! Welcome back!');
-      window.location.href = '/';
+      window.location.href = '/welcome';
 
     } catch (err) {
       console.error("Login request failed:", err);
