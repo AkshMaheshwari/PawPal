@@ -40,7 +40,7 @@ const Signup = () => {
       }
 
       toast.success('Signup successful! Welcome to PawPal!');
-      window.location.href = '/login';
+      window.location.href = '/user/login';
     } catch (err) {
       toast.error('Something went wrong', err);
     } finally {
@@ -222,7 +222,7 @@ const Signup = () => {
             {/* Login Link */}
             <p className="text-center text-gray-600 mt-8">
               Already have an account?{' '}
-              <Link to="/login" className="text-yellow-600 hover:text-yellow-700 font-semibold hover:underline transition-colors duration-200">
+              <Link to="/user/login" className="text-yellow-600 hover:text-yellow-700 font-semibold hover:underline transition-colors duration-200">
                 Sign in here
               </Link>
             </p>

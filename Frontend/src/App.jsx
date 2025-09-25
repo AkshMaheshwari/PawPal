@@ -8,6 +8,8 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Welcome from './pages/Welcome';
+import PetForm from './Components/PetForm';
+import ShelterDashboard from './pages/ShelterDashboard';
 
 export default function App() {
   return (
@@ -17,9 +19,11 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/welcome" element={<Welcome />} />
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/user/signup" element={<Signup />} />
+        <Route path="/user/home" element={<Welcome />} />
+        <Route path="/shelter/add" element={<PetForm />} />
+        <Route path="/shelter/dashboard" element={<ShelterDashboard />} />
       </Routes>
     </Router>
   );
