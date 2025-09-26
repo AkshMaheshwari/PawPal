@@ -48,7 +48,7 @@ const ShelterDashboard = () => {
     const method = editingPet ? "PUT" : "POST";
     const url = editingPet
       ? `http://localhost:3000/api/pets/${editingPet._id}`
-      : "http://localhost:3000/api/pets";
+      : "http://localhost:3000/api/pets/add";
 
     try {
       const res = await fetch(url, {
