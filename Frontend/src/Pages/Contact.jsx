@@ -24,7 +24,7 @@ const Contact = () => {
           </div>
 
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
-            {["About", "Pets", "Contact", "Donate"].map((item) => (
+            {["About","Contact", "Donate"].map((item) => (
               <a
                 key={item}
                 href={`/${item.toLowerCase()}`}
@@ -35,7 +35,7 @@ const Contact = () => {
               </a>
             ))}
             <a
-              href="/signup"
+              href="/user/signup"
               className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-6 py-2.5 rounded-full hover:from-yellow-600 hover:to-amber-600 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
             >
               Get Started

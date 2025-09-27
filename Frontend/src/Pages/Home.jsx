@@ -69,10 +69,6 @@ export default function Home() {
               About
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full rounded-full"></span>
             </a>
-            <a href="/pets" className="text-gray-600 hover:text-yellow-600 transition-all duration-300 relative group">
-              Pets
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full rounded-full"></span>
-            </a>
             <a href="/contact" className="text-gray-600 hover:text-yellow-600 transition-all duration-300 relative group">
               Contact
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full rounded-full"></span>
