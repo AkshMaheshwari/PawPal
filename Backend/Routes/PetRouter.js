@@ -12,7 +12,20 @@ Petrouter.get("/", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
+// GET - get pet by ID
+Petrouter.get("/:id", async(req, res) =>{
+  try{
+    const petId = req.params.id;
+    const pet = await Pet.findById(petId);
+    if(!pet){
+      return res.status(404).json({message: "Pet not found"});
+    }
+    return res.json(pet);
+  }
+  catch(error){
+    res.status(500).json({message: error.message});
+  }
+});
 // POST - add new pet
 Petrouter.post("/add", async (req, res) => {
   try {

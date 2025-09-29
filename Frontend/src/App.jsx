@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -10,10 +12,25 @@ import Signup from './pages/Signup';
 import Welcome from './pages/Welcome';
 import PetForm from './Components/PetForm';
 import ShelterDashboard from './pages/ShelterDashboard';
+import Adopt from './pages/Adopt';
 
 export default function App() {
   return (
     <Router>
+      {/* Toast container is global for all pages */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -24,6 +41,8 @@ export default function App() {
         <Route path="/user/home" element={<Welcome />} />
         <Route path="/shelter/add" element={<PetForm />} />
         <Route path="/shelter/dashboard" element={<ShelterDashboard />} />
+        <Route path="/user/adopt/:id" element={<Adopt />} />
+        
       </Routes>
     </Router>
   );
