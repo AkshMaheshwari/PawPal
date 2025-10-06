@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 
 import AuthRouter from "./Routes/AuthRouter.js";
 import PetRouter from "./Routes/PetRouter.js";
+import AdoptionRequestRouter from "./Routes/AdoptionRequestRouter.js";
 import connectDB from "./Models/db.js";
 
 const app = express();
@@ -23,7 +24,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
 app.use("/Auth", AuthRouter);
-app.use("/api/pets", PetRouter);  // ✅ now wired correctly
+app.use("/api/pets", PetRouter);
+app.use("/api/requests", AdoptionRequestRouter); // ✅ Added new route
 
 // start server
 app.listen(PORT, () => {

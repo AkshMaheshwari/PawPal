@@ -12,7 +12,7 @@ import Signup from './pages/Signup';
 import Welcome from './pages/Welcome';
 import PetForm from './Components/PetForm';
 import ShelterDashboard from './pages/ShelterDashboard';
-import Adopt from './pages/Adopt';
+import AdoptionRequest from './pages/AdoptionRequest';
 
 export default function App() {
   return (
@@ -41,8 +41,7 @@ export default function App() {
         <Route path="/user/home" element={<Welcome />} />
         <Route path="/shelter/add" element={<PetForm />} />
         <Route path="/shelter/dashboard" element={<ShelterDashboard />} />
-        <Route path="/user/adopt/:id" element={<Adopt />} />
-        
+        <Route path="/user/adopt/:petId/request" element={<AdoptionRequest />} />
       </Routes>
     </Router>
   );
