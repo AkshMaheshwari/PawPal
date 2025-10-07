@@ -1,13 +1,48 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, PawPrint } from "lucide-react";
 import { FaPaw } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
 const Contact = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Thank you for reaching out! We’ll get back to you soon.");
-  };
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [subject, setSubject] = React.useState('');
+  const [message, setMessage] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      if (!email || !name || !message || !subject) {
+        toast.error('Please fill in all fields');
+        return;
+      }
+  
+      setIsLoading(true);
+      try {
+        const res = await fetch('http://localhost:3000/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name, subject, message })
+        });
+  
+        const data = await res.json();
+        console.log("Backend login response:", data);
+  
+        if (!res.ok) {
+          toast.error(data.error || 'failed to send your form!');
+          return;
+        }
+  
+  
+      } catch (err) {
+        console.error("Login request failed:", err);
+        toast.error('Something went wrong');
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-white">
@@ -128,6 +163,7 @@ const Contact = () => {
                     type="text"
                     placeholder="Your Name"
                     required
+                    onChange={(e) => setName(e.target.value)}
                     className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
                   />
                 </div>
@@ -143,6 +179,7 @@ const Contact = () => {
                     type="email"
                     placeholder="you@example.com"
                     required
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
                   />
                 </div>
@@ -159,6 +196,7 @@ const Contact = () => {
                   id="subject"
                   type="text"
                   placeholder="How can we help?"
+                  onChange={(e) => setSubject(e.target.value)}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
                 />
               </div>
@@ -175,6 +213,7 @@ const Contact = () => {
                   rows="5"
                   placeholder="Write your message..."
                   required
+                  onChange={(e) => setMessage(e.target.value)}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
                 ></textarea>
               </div>

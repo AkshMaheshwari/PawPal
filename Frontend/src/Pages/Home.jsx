@@ -111,7 +111,7 @@ export default function Home() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="group bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                <button className="group bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2" onClick={() => window.location.href = "/user/login"}>
                   Start Adoption Journey
                   <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
