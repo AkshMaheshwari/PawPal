@@ -14,7 +14,6 @@ Contactrouter.post("/", async(req, res)=>{
         
         const contactModel = new Contact({name, email, subject, message});
         await contactModel.save();
-        console.log(res);
         return res.status(201).json({message: "Message sent successfully"});
 
     } catch (error) {

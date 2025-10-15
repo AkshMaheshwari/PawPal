@@ -1,17 +1,79 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart, Home, Stethoscope, PawPrint } from "lucide-react";
 import { FaPaw } from "react-icons/fa";
+import axios from "axios";
 
 const Donate = () => {
-  const handleSubmit = (e) => {
+  const [amount, setAmount] = useState(500);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handlePayment = async (e) => {
     e.preventDefault();
-    alert("Thank you for your donation! Your kindness means the world to our furry friends.");
+
+    if (!amount || amount <= 0) {
+      alert("Please enter a valid amount");
+      return;
+    }
+
+    try {
+      // 1️⃣ Create order on backend
+      const { data } = await axios.post("http://localhost:3000/api/donate/create-order", {
+        amount,
+        currency: "INR",
+        receipt: "receipt#1",
+        notes: { donor_name: name, donor_email: email },
+      });
+
+      const order = data;
+
+      // 2️⃣ Configure Razorpay checkout options
+      const options = {
+        key: "rzp_test_RTfVl6TT8ZEFbD", // replace with your actual Razorpay Key ID
+        amount: order.amount,
+        currency: order.currency,
+        name: "PawPal Donations",
+        description: "Thank you for supporting PawPal ❤️",
+        image: "https://cdn-icons-png.flaticon.com/512/616/616408.png",
+        order_id: order.id,
+        handler: async function (response) {
+          const verifyData = {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          };
+
+          // 3️⃣ Verify payment
+          await axios.post("http://localhost:3000/api/donate/verify-payment", verifyData);
+          alert("🎉 Payment successful! Thank you for your donation.");
+        },
+        prefill: {
+          name: name,
+          email: email,
+        },
+        theme: {
+          color: "#FBBF24",
+        },
+      };
+
+      // 4️⃣ Open Razorpay Checkout
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
+      rzp.on("payment.failed", function (response) {
+        alert("❌ Payment failed. Please try again.", response.error);
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Try again later.");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-white">
-      {/* Navbar (same style as Contact) */}
+      {/* Navbar (same as your original) */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl shadow-lg border-b border-yellow-100/50">
         <div className="container mx-auto flex justify-between items-center px-6 py-4">
           <div className="flex items-center gap-3">
@@ -51,7 +113,6 @@ const Donate = () => {
         transition={{ duration: 0.6 }}
         className="flex flex-col items-center pt-32 pb-16 px-4"
       >
-        {/* Header */}
         <div className="max-w-2xl text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-yellow-600 mb-4">
             Support PawPal
@@ -61,7 +122,6 @@ const Donate = () => {
           </p>
         </div>
 
-        {/* Layout Grid */}
         <div className="grid lg:grid-cols-3 gap-10 max-w-6xl w-full">
           {/* Impact Section */}
           <motion.div
@@ -95,10 +155,9 @@ const Donate = () => {
             className="lg:col-span-2"
           >
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handlePayment}
               className="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-10 space-y-6 hover:shadow-2xl transition"
             >
-              {/* Preset Donation Options */}
               <div>
                 <h3 className="text-lg font-semibold text-gray-700 mb-3">Choose Amount</h3>
                 <div className="flex flex-wrap gap-3">
@@ -106,7 +165,12 @@ const Donate = () => {
                     <button
                       key={amt}
                       type="button"
-                      className="px-4 py-2 rounded-lg border border-gray-300 hover:border-yellow-500 hover:bg-yellow-50 transition font-semibold"
+                      onClick={() => setAmount(amt)}
+                      className={`px-4 py-2 rounded-lg border ${
+                        amount === amt
+                          ? "border-yellow-500 bg-yellow-50"
+                          : "border-gray-300"
+                      } hover:border-yellow-500 transition font-semibold`}
                     >
                       ₹{amt}
                     </button>
@@ -114,12 +178,13 @@ const Donate = () => {
                   <input
                     type="number"
                     placeholder="Custom Amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
                     className="flex-1 border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
                   />
                 </div>
               </div>
 
-              {/* Donor Info */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">
@@ -127,6 +192,8 @@ const Donate = () => {
                   </label>
                   <input
                     type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Your Name"
                     required
                     className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
@@ -138,23 +205,13 @@ const Donate = () => {
                   </label>
                   <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
                     required
                     className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
                   />
                 </div>
-              </div>
-
-              {/* Payment Method */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
-                  Payment Method
-                </label>
-                <select className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition">
-                  <option>UPI</option>
-                  <option>Credit/Debit Card</option>
-                  <option>Net Banking</option>
-                </select>
               </div>
 
               <button
@@ -167,53 +224,6 @@ const Donate = () => {
           </motion.div>
         </div>
       </motion.div>
-      <footer className="bg-gray-900 text-white py-16">
-          <div className="container mx-auto px-6">
-            <div className="grid md:grid-cols-4 gap-8 mb-8">
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center">
-                    <FaPaw className="text-white text-lg" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-yellow-500">PawPal</h3>
-                </div>
-                <p className="text-gray-400 leading-relaxed">
-                  Making pet adoption simple, safe, and successful for everyone involved.
-                </p>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-                <div className="space-y-2">
-                  <a href="/about" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">About Us</a>
-                  <a href="/pets" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Find Pets</a>
-                  <a href="/contact" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Contact</a>
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Support</h4>
-                <div className="space-y-2">
-                  <a href="/donate" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Donate</a>
-                  <a href="/volunteer" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Volunteer</a>
-                  <a href="/faq" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">FAQ</a>
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Legal</h4>
-                <div className="space-y-2">
-                  <a href="/privacy" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Privacy Policy</a>
-                  <a href="/terms" className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 block">Terms of Service</a>
-                </div>
-              </div>
-            </div>
-            
-            <div className="border-t border-gray-800 pt-8 text-center">
-              <p className="text-gray-400">&copy; 2025 PawPal. All rights reserved. Made with ❤️ for animals in need.</p>
-            </div>
-          </div>
-        </footer>
     </div>
   );
 };

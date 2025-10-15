@@ -11,6 +11,10 @@ import PetRouter from "./Routes/PetRouter.js";
 import AdoptionRequestRouter from "./Routes/AdoptionRequestRouter.js";
 import ContactRouter from "./Routes/ContactRouter.js";
 import connectDB from "./Models/db.js";
+import DonateRouter from "./Routes/DonateRouter.js";
+
+
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,6 +32,7 @@ app.use("/Auth", AuthRouter);
 app.use("/api/pets", PetRouter);
 app.use("/api/requests", AdoptionRequestRouter); // ✅ Added new route
 app.use("/contact", ContactRouter); // Contact route
+app.use("/api/donate", DonateRouter); // Donate route
 
 // start server
 app.listen(PORT, () => {

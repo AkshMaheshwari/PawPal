@@ -34,7 +34,12 @@ const Contact = () => {
           toast.error(data.error || 'failed to send your form!');
           return;
         }
-  
+        
+        toast.success('Message sent successfully!');
+        setName('');
+        setEmail('');
+        setSubject('');
+        setMessage('');
   
       } catch (err) {
         console.error("Login request failed:", err);
