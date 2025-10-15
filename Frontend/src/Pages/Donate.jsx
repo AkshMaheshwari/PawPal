@@ -73,7 +73,7 @@ const Donate = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-white">
-      {/* Navbar (same as your original) */}
+      {/* Navbar */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl shadow-lg border-b border-yellow-100/50">
         <div className="container mx-auto flex justify-between items-center px-6 py-4">
           <div className="flex items-center gap-3">
@@ -113,12 +113,21 @@ const Donate = () => {
         transition={{ duration: 0.6 }}
         className="flex flex-col items-center pt-32 pb-16 px-4"
       >
-        <div className="max-w-2xl text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-yellow-600 mb-4">
+        <div className="max-w-3xl text-center mb-16">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="inline-flex items-center gap-2 bg-yellow-100 text-yellow-700 px-6 py-2 rounded-full mb-6 font-semibold text-sm"
+          >
+            <Heart className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+            Make a Difference Today
+          </motion.div>
+          <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent mb-6 leading-tight">
             Support PawPal
           </h1>
-          <p className="text-gray-600 text-lg">
-            Your kind donation provides food, shelter, and medical care for animals in need.
+          <p className="text-gray-600 text-lg md:text-xl leading-relaxed">
+            Your kind donation provides food, shelter, and medical care for animals in need. Every contribution brings hope to a furry friend.
           </p>
         </div>
 
@@ -127,23 +136,52 @@ const Donate = () => {
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-8 space-y-6 hover:shadow-2xl transition"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-gradient-to-br from-white to-yellow-50/50 backdrop-blur-md shadow-xl rounded-3xl p-8 space-y-6 hover:shadow-2xl transition-all duration-500 border border-yellow-100"
           >
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              <PawPrint className="text-yellow-500" /> Your Impact
-            </h2>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-xl shadow-lg">
+                <PawPrint className="text-white w-6 h-6" />
+              </div>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+                Your Impact
+              </h2>
+            </div>
 
-            <div className="space-y-4 text-gray-700 font-medium">
-              <div className="flex items-center gap-3">
-                <Home className="text-yellow-500" /> Safe shelter & daily care
-              </div>
-              <div className="flex items-center gap-3">
-                <Stethoscope className="text-yellow-500" /> Medical treatment & vaccinations
-              </div>
-              <div className="flex items-center gap-3">
-                <Heart className="text-yellow-500" /> Nutritious food & supplies
-              </div>
+            <div className="space-y-5 text-gray-700">
+              <motion.div
+                whileHover={{ x: 5 }}
+                className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-yellow-100/50"
+              >
+                <div className="p-2 bg-blue-50 rounded-lg">
+                  <Home className="text-blue-500 w-5 h-5" />
+                </div>
+                <span className="font-semibold">Safe shelter & daily care</span>
+              </motion.div>
+              <motion.div
+                whileHover={{ x: 5 }}
+                className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-yellow-100/50"
+              >
+                <div className="p-2 bg-green-50 rounded-lg">
+                  <Stethoscope className="text-green-500 w-5 h-5" />
+                </div>
+                <span className="font-semibold">Medical treatment & vaccinations</span>
+              </motion.div>
+              <motion.div
+                whileHover={{ x: 5 }}
+                className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-yellow-100/50"
+              >
+                <div className="p-2 bg-red-50 rounded-lg">
+                  <Heart className="text-red-500 w-5 h-5" />
+                </div>
+                <span className="font-semibold">Nutritious food & supplies</span>
+              </motion.div>
+            </div>
+
+            <div className="mt-8 p-5 bg-gradient-to-r from-yellow-100 to-amber-100 rounded-xl border border-yellow-200">
+              <p className="text-sm text-gray-700 font-medium text-center">
+                <span className="text-2xl font-bold text-yellow-600">1000+</span> animals helped this year
+              </p>
             </div>
           </motion.div>
 
@@ -151,57 +189,64 @@ const Donate = () => {
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-2"
           >
             <form
               onSubmit={handlePayment}
-              className="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-10 space-y-6 hover:shadow-2xl transition"
+              className="bg-gradient-to-br from-white to-amber-50/30 backdrop-blur-md shadow-2xl rounded-3xl p-10 space-y-8 hover:shadow-3xl transition-all duration-500 border border-yellow-100"
             >
               <div>
-                <h3 className="text-lg font-semibold text-gray-700 mb-3">Choose Amount</h3>
-                <div className="flex flex-wrap gap-3">
+                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                  <span className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">1</span>
+                  Choose Amount
+                </h3>
+                <div className="flex flex-wrap gap-3 mb-4">
                   {[500, 1000, 2000, 5000].map((amt) => (
-                    <button
+                    <motion.button
                       key={amt}
                       type="button"
                       onClick={() => setAmount(amt)}
-                      className={`px-4 py-2 rounded-lg border ${
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`px-6 py-3 rounded-xl font-bold transition-all duration-300 ${
                         amount === amt
-                          ? "border-yellow-500 bg-yellow-50"
-                          : "border-gray-300"
-                      } hover:border-yellow-500 transition font-semibold`}
+                          ? "bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg border-2 border-yellow-400"
+                          : "bg-white border-2 border-gray-200 text-gray-700 hover:border-yellow-400 hover:shadow-md"
+                      }`}
                     >
                       ₹{amt}
-                    </button>
+                    </motion.button>
                   ))}
-                  <input
-                    type="number"
-                    placeholder="Custom Amount"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    className="flex-1 border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
-                  />
                 </div>
+                <input
+                  type="number"
+                  placeholder="Or enter custom amount"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="w-full border-2 border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus:outline-none hover:border-yellow-300 transition-all duration-300 font-semibold text-gray-700 bg-white shadow-sm"
+                />
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
-                    Name
+                  <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                    <span className="w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-md flex items-center justify-center text-white font-bold text-xs">2</span>
+                    Your Name
                   </label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Your Name"
+                    placeholder="Enter your name"
                     required
-                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
+                    className="w-full border-2 border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus:outline-none hover:border-yellow-300 transition-all duration-300 bg-white shadow-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
-                    Email
+                  <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                    <span className="w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-md flex items-center justify-center text-white font-bold text-xs">3</span>
+                    Email Address
                   </label>
                   <input
                     type="email"
@@ -209,17 +254,24 @@ const Donate = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
                     required
-                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none hover:border-yellow-400 transition"
+                    className="w-full border-2 border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus:outline-none hover:border-yellow-300 transition-all duration-300 bg-white shadow-sm"
                   />
                 </div>
               </div>
 
-              <button
+              <motion.button
                 type="submit"
-                className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 hover:from-yellow-600 hover:via-amber-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-2 text-lg"
               >
-                Donate Now
-              </button>
+                <Heart className="w-5 h-5 fill-white" />
+                Complete Donation
+              </motion.button>
+
+              <p className="text-center text-sm text-gray-500 mt-4">
+                🔒 Secure payment powered by Razorpay
+              </p>
             </form>
           </motion.div>
         </div>
