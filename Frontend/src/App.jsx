@@ -3,21 +3,20 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Home from './pages/Home';
-import About from './pages/About';
-import Donate from './pages/Donate';
-import Contact from './pages/Contact';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Welcome from './pages/Welcome';
-import PetForm from './Components/PetForm';
-import ShelterDashboard from './pages/ShelterDashboard';
-import AdoptionRequest from './pages/AdoptionRequest';
+import Home from './pages/Home.jsx';
+import About from './pages/About.jsx';
+import Donate from './pages/Donate.jsx';
+import Contact from './pages/Contact.jsx';
+import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
+import Welcome from './pages/Welcome.jsx';
+import PetForm from './components/PetForm.jsx';  // Changed 'Components' to 'components'
+import ShelterDashboard from './pages/ShelterDashboard.jsx';
+import AdoptionRequest from './pages/AdoptionRequest.jsx';
 
 export default function App() {
   return (
     <Router>
-      {/* Toast container is global for all pages */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
