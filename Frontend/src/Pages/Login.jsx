@@ -37,6 +37,7 @@ const Login = () => {
 
       localStorage.setItem("username", data.user.name);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       toast.success('Login successful! Welcome back!');
       window.location.href = '/user/home';
 
