@@ -3,16 +3,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Home from './pages/Home.jsx';
-import About from './pages/About.jsx';
-import Donate from './pages/Donate.jsx';
-import Contact from './pages/Contact.jsx';
-import Login from './pages/Login.jsx';
-import Signup from './pages/Signup.jsx';
-import Welcome from './pages/Welcome.jsx';
-import PetForm from './components/PetForm.jsx';  // Changed 'Components' to 'components'
-import ShelterDashboard from './pages/ShelterDashboard.jsx';
-import AdoptionRequest from './pages/AdoptionRequest.jsx';
+import Home from './Pages/Home.jsx';  // Changed to capital P
+import About from './Pages/About.jsx';
+import Donate from './Pages/Donate.jsx';
+import Contact from './Pages/Contact.jsx';
+import Login from './Pages/Login.jsx';
+import Signup from './Pages/Signup.jsx';
+import Welcome from './Pages/Welcome.jsx';
+import PetForm from './Components/PetForm.jsx';  // Changed to capital C
+import ShelterDashboard from './Pages/ShelterDashboard.jsx';
+import AdoptionRequest from './Pages/AdoptionRequest.jsx';
 
 export default function App() {
   return (
