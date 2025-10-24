@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaPaw, FaHeart, FaCheckCircle, FaDog, FaArrowRight, FaStar, FaShieldAlt } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaPaw, FaHeart, FaCheckCircle, FaDog, FaArrowRight, FaStar, FaShieldAlt, FaBars, FaTimes } from 'react-icons/fa';
 import { GiCat, GiRabbit } from 'react-icons/gi';
 import { MdPets, MdVerified, MdLocationOn } from 'react-icons/md';
 
@@ -50,6 +50,8 @@ const stats = [
 ];
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="bg-gradient-to-br from-yellow-50 via-white to-amber-50 text-gray-800 font-sans min-h-screen">
       {/* Enhanced Navbar with Glass Effect */}
@@ -64,6 +66,7 @@ export default function Home() {
             </h1>
           </div>
           
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
             <a href="/about" className="text-gray-600 hover:text-yellow-600 transition-all duration-300 relative group">
               About
@@ -84,7 +87,38 @@ export default function Home() {
               Get Started
             </a>
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden text-gray-600 hover:text-yellow-600 transition-colors duration-300"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
+          </button>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white/95 backdrop-blur-xl border-t border-yellow-100/50">
+            <nav className="container mx-auto px-6 py-4 flex flex-col space-y-4">
+              <a href="/about" className="text-gray-600 hover:text-yellow-600 transition-colors duration-300 py-2 font-medium">
+                About
+              </a>
+              <a href="/contact" className="text-gray-600 hover:text-yellow-600 transition-colors duration-300 py-2 font-medium">
+                Contact
+              </a>
+              <a href="/donate" className="text-gray-600 hover:text-yellow-600 transition-colors duration-300 py-2 font-medium">
+                Donate
+              </a>
+              <a
+                href="/user/signup"
+                className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-6 py-3 rounded-full hover:from-yellow-600 hover:to-amber-600 font-semibold shadow-lg text-center"
+              >
+                Get Started
+              </a>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero Section with Enhanced Design */}
