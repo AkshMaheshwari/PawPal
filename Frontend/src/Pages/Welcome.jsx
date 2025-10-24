@@ -41,7 +41,7 @@ const Welcome = () => {
 
   // fetch pets from backend
   useEffect(() => {
-    fetch("http://localhost:3000/api/pets")
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pets`)
       .then((res) => res.json())
       .then((data) => {
         setPets(data);

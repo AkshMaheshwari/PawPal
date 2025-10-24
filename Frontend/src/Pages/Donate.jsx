@@ -20,7 +20,7 @@ const Donate = () => {
 
     try {
       // 1️⃣ Create order on backend
-      const { data } = await axios.post("http://localhost:3000/api/donate/create-order", {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/donate/create-order`, {
         amount,
         currency: "INR",
         receipt: "receipt#1",
@@ -46,7 +46,7 @@ const Donate = () => {
           };
 
           // 3️⃣ Verify payment
-          await axios.post("http://localhost:3000/api/donate/verify-payment", verifyData);
+          await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/donate/verify-payment`, verifyData);
           alert("🎉 Payment successful! Thank you for your donation.");
         },
         prefill: {

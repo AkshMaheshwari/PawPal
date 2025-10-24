@@ -28,7 +28,7 @@ const ShelterDashboard = () => {
   const [reqError, setReqError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/pets")
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pets`)
       .then((res) => res.json())
       .then((data) => {
         setPets(data);
@@ -48,7 +48,7 @@ const ShelterDashboard = () => {
       setReqLoading(true);
       setReqError("");
       try {
-        const res = await fetch("http://localhost:3000/api/requests", { headers });
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/requests`, { headers });
         const data = await res.json();
         if (!res.ok) throw new Error(data?.message || "Failed to load requests");
         setRequests(Array.isArray(data) ? data : (data.data || []));
@@ -73,8 +73,8 @@ const ShelterDashboard = () => {
     e.preventDefault();
     const method = editingPet ? "PUT" : "POST";
     const url = editingPet
-      ? `http://localhost:3000/api/pets/${editingPet._id}`
-      : "http://localhost:3000/api/pets/add";
+      ? `${import.meta.env.VITE_BACKEND_URL}/api/pets/${editingPet._id}`
+      : `${import.meta.env.VITE_BACKEND_URL}/api/pets/add`;
 
     try {
       const res = await fetch(url, {
@@ -116,7 +116,7 @@ const ShelterDashboard = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this pet?")) return;
     try {
-      await fetch(`http://localhost:3000/api/pets/${id}`, { method: "DELETE" });
+      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pets/${id}`, { method: "DELETE" });
       setPets((prev) => prev.filter((p) => p._id !== id));
     } catch (err) {
       console.error("Error deleting pet:", err);

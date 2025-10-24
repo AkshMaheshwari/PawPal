@@ -32,7 +32,7 @@ export default function AdoptionRequest() {
       setPetLoading(true);
       setPetError("");
       try {
-        const res = await fetch(`http://localhost:3000/api/pets/${petId}`);
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pets/${petId}`);
         const data = await res.json();
         if (!res.ok) throw new Error(data?.message || "Failed to load pet");
         if (active) setPet(data);
@@ -84,7 +84,7 @@ export default function AdoptionRequest() {
     setSubmitting(true);
     try {
       const payload = { pet: petId, adopterDetails: formData };
-      const res = await fetch("http://localhost:3000/api/requests", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

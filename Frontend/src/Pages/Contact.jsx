@@ -24,7 +24,7 @@ const Contact = () => {
         try {
             // NOTE: Switched to axios for consistency with the Donate component, but kept fetch logic for now.
             // If you use axios, the logic below needs a slight adjustment, but for a simple fetch, it's fine.
-            const res = await fetch('http://localhost:3000/contact', {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, name, subject, message })
