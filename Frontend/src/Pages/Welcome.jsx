@@ -151,8 +151,9 @@ const Welcome = () => {
           </div>
           <button
             onClick={() => {
-              localStorage.removeItem("authToken");
-              sessionStorage.removeItem("authToken");
+              localStorage.removeItem("token");
+              localStorage.removeItem("user");
+              localStorage.removeItem("username");
               window.location.href = "/user/login";
             }}
             className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 text-white px-5 py-2.5 rounded-xl shadow-lg hover:shadow-xl hover:from-red-600 hover:to-rose-700 transition-all transform hover:scale-105 font-semibold"

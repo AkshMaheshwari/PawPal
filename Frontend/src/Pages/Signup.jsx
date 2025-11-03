@@ -214,10 +214,10 @@ const Signup = () => {
             </div>
 
             {/* Social Signup */}
-            <button className="w-full flex items-center justify-center gap-3 px-6 py-4 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-200 group">
+            {/* <button className="w-full flex items-center justify-center gap-3 px-6 py-4 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-200 group">
               <FaGoogle className="text-red-500 text-xl" />
               <span className="text-gray-700 font-medium group-hover:text-gray-900">Continue with Google</span>
-            </button>
+            </button> */}
 
             {/* Login Link */}
             <p className="text-center text-gray-600 mt-8">
