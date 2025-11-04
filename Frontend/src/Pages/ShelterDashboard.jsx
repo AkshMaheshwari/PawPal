@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaPlus, FaTrash, FaEdit, FaInbox, FaCheckCircle, FaTimesCircle, FaClock, FaPaw, FaChartBar } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit, FaInbox, FaCheckCircle, FaTimesCircle, FaClock, FaPaw, FaChartBar, FaCheck, FaTimes } from "react-icons/fa";
 
 const ShelterDashboard = () => {
   const [pets, setPets] = useState([]);
@@ -26,6 +26,7 @@ const ShelterDashboard = () => {
   const [requests, setRequests] = useState([]);
   const [reqLoading, setReqLoading] = useState(false);
   const [reqError, setReqError] = useState("");
+  const [processingRequest, setProcessingRequest] = useState(null);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pets`)
@@ -60,6 +61,48 @@ const ShelterDashboard = () => {
     }
     loadRequests();
   }, [activeTab]);
+
+  const handleRequestAction = async (requestId, action) => {
+    setProcessingRequest(requestId);
+    const token = localStorage.getItem("token") || "";
+    const headers = {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    };
+
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/requests/${requestId}/status`,
+        {
+          method: "PUT",
+          headers
+        }
+      );
+
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data?.message || `Failed to ${action} request`);
+      }
+
+      // Update the request in the local state
+      setRequests(prevRequests =>
+        prevRequests.map(req =>
+          req._id === requestId
+            ? { ...req, status: action === "approve" ? "approved" : "rejected" }
+            : req
+        )
+      );
+
+      // Show success message
+      alert(`Request ${action === "approve" ? "approved" : "rejected"} successfully!`);
+    } catch (error) {
+      console.error(`Error ${action}ing request:`, error);
+      alert(error.message || `Failed to ${action} request`);
+    } finally {
+      setProcessingRequest(null);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -501,39 +544,106 @@ const ShelterDashboard = () => {
                     ? { box: "bg-rose-50 border-l-rose-500", pill: "bg-rose-100 text-rose-800 border-rose-300", icon: <FaTimesCircle className="text-rose-600" /> }
                     : { box: "bg-amber-50 border-l-amber-500", pill: "bg-amber-100 text-amber-800 border-amber-300", icon: <FaClock className="text-amber-600" /> };
 
+                  const isProcessing = processingRequest === r._id;
+                  const isPending = status === "pending";
+
                   return (
                     <div key={r._id} className={`p-6 border-l-4 ${statusConfig.box} hover:bg-opacity-80 transition-all`}>
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-3">
-                            {statusConfig.icon}
-                            <span className={`px-3 py-1 rounded-full text-xs font-bold border ${statusConfig.pill} uppercase tracking-wide`}>
-                              {status}
-                            </span>
-                          </div>
-                          <div className="text-gray-900 font-bold text-lg mb-2">
-                            {r.pet?.name ? `Adoption request for ${r.pet.name}` : "Adoption request"}
-                          </div>
-                          <div className="text-sm text-gray-600 space-y-1">
-                            <div className="flex items-center gap-2">
-                              <span className="font-semibold">Applicant:</span>
-                              <span>{r.adopterDetails?.fullName || "Unknown"}</span>
+                      <div className="flex flex-col gap-4">
+                        {/* Request Info */}
+                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-3">
+                              {statusConfig.icon}
+                              <span className={`px-3 py-1 rounded-full text-xs font-bold border ${statusConfig.pill} uppercase tracking-wide`}>
+                                {status}
+                              </span>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-semibold">Contact:</span>
-                              <span>{r.adopterDetails?.email || "N/A"} • {r.adopterDetails?.phone || "N/A"}</span>
+                            <div className="text-gray-900 font-bold text-lg mb-2">
+                              {r.pet?.name ? `Adoption request for ${r.pet.name}` : "Adoption request"}
                             </div>
+                            <div className="text-sm text-gray-600 space-y-1">
+                              <div className="flex items-center gap-2">
+                                <span className="font-semibold">Applicant:</span>
+                                <span>{r.adopterDetails?.fullName || "Unknown"}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-semibold">Contact:</span>
+                                <span>{r.adopterDetails?.email || "N/A"} • {r.adopterDetails?.phone || "N/A"}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-sm text-gray-500 font-medium">
+                            {new Date(r.createdAt || r.updatedAt || Date.now()).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
                           </div>
                         </div>
-                        <div className="text-sm text-gray-500 font-medium">
-                          {new Date(r.createdAt || r.updatedAt || Date.now()).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })}
-                        </div>
+
+                        {/* Action Buttons */}
+                        {isPending && (
+                          <div className="flex gap-3">
+                            <button
+                              onClick={() => handleRequestAction(r._id, "approve")}
+                              disabled={isProcessing}
+                              className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all font-semibold shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                            >
+                              {isProcessing ? (
+                                <>
+                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                  Processing...
+                                </>
+                              ) : (
+                                <>
+                                  <FaCheck className="text-lg" />
+                                  Accept Request
+                                </>
+                              )}
+                            </button>
+                            <button
+                              onClick={() => handleRequestAction(r._id, "reject")}
+                              disabled={isProcessing}
+                              className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 text-white py-3 px-4 rounded-xl hover:from-red-600 hover:to-rose-700 transition-all font-semibold shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                            >
+                              {isProcessing ? (
+                                <>
+                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                  Processing...
+                                </>
+                              ) : (
+                                <>
+                                  <FaTimes className="text-lg" />
+                                  Reject Request
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        )}
+
+                        {/* Status Message for Processed Requests */}
+                        {!isPending && (
+                          <div className={`flex items-center gap-2 p-3 rounded-xl ${
+                            status === "approved" 
+                              ? "bg-emerald-100 text-emerald-800 border border-emerald-200" 
+                              : "bg-rose-100 text-rose-800 border border-rose-200"
+                          }`}>
+                            {status === "approved" ? (
+                              <>
+                                <FaCheckCircle />
+                                <span className="font-semibold text-sm">Request has been approved</span>
+                              </>
+                            ) : (
+                              <>
+                                <FaTimesCircle />
+                                <span className="font-semibold text-sm">Request has been rejected</span>
+                              </>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
