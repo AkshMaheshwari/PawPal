@@ -297,7 +297,7 @@ export default function Home() {
             <button className="bg-white text-yellow-600 px-8 py-4 rounded-2xl font-bold hover:bg-gray-100 transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-xl" onClick={() => window.location.href = "/user/signup"}>
               Browse Available Pets
             </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/10 transform hover:-translate-y-1 transition-all duration-300" onClick={() => window.location.href = "/shelter/dashboard"}>
+            <button className="border-2 border-white text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/10 transform hover:-translate-y-1 transition-all duration-300" onClick={() => window.location.href = "/user/login"}>
               Become a Partner Shelter
             </button>
           </div>
