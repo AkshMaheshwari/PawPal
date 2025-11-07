@@ -12,42 +12,51 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!email || !password) {
-      toast.error('Please fill in all fields');
+  if (!email || !password) {
+    toast.error('Please fill in all fields');
+    return;
+  }
+
+  setIsLoading(true);
+  try {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/Auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+    console.log("Backend login response:", data);
+
+    if (!res.ok) {
+      toast.error(data.error || 'Login failed');
       return;
     }
 
-    setIsLoading(true);
-    try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/Auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
+    // ✅ Store user data securely
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("username", data.user.name);
 
-      const data = await res.json();
-      console.log("Backend login response:", data);
-
-      if (!res.ok) {
-        toast.error(data.error || 'Login failed');
-        return;
-      }
-
-      localStorage.setItem("username", data.user.name);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      toast.success('Login successful! Welcome back!');
-      window.location.href = '/user/home';
-
-    } catch (err) {
-      console.error("Login request failed:", err);
-      toast.error('Something went wrong');
-    } finally {
-      setIsLoading(false);
+    // ✅ Role-based redirection
+    if (data.user.name === "pawpal_admin") {
+      toast.success("Login successful! Welcome back, Shelter Admin!");
+      window.location.href = "/shelter/dashboard";
+    } else {
+      toast.success("Login successful! Welcome back!");
+      window.location.href = "/user/home";
     }
-  };
+
+  } catch (err) {
+    console.error("Login request failed:", err);
+    toast.error("Something went wrong");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const features = [
     { icon: <MdVerified className="text-green-500" />, text: "Verified shelters only", color: "bg-green-50" },

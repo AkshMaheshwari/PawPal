@@ -232,6 +232,7 @@ const ShelterDashboard = () => {
               <p className="text-gray-600 text-sm">Manage your shelter pets and adoption requests</p>
             </div>
             {activeTab === "pets" && (
+            <div className="flex gap-3">
               <button
                 onClick={() => {
                   setEditingPet(null);
@@ -241,7 +242,19 @@ const ShelterDashboard = () => {
               >
                 <FaPlus className="text-lg" /> Add New Pet
               </button>
+              
+              <button
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.href = "/user/login";
+                }}
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl hover:from-red-600 hover:to-rose-700 transition-all transform hover:scale-105 font-semibold"
+              >
+                <FaTimes className="text-lg" /> Logout
+              </button>
+            </div>
             )}
+
           </div>
 
           {/* Tabs */}

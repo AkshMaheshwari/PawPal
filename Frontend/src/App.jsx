@@ -38,8 +38,17 @@ export default function App() {
           }
         />
 
+        <Route
+          path="/shelter/dashboard"
+          element={
+            <ProtectedRoute>
+              <ShelterDashboard />
+            </ProtectedRoute>
+          }
+        />  
+        
+
         <Route path="/shelter/add" element={<PetForm />} />
-        <Route path="/shelter/dashboard" element={<ShelterDashboard />} />
         <Route path="/user/adopt/:petId/request" element={<AdoptionRequest />} />
       </Routes>
     </Router>

@@ -24,6 +24,21 @@ export const signUp = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if(email === process.env.SHELTER_EMAIL && password === process.env.SHELTER_PASSWORD)
+    {
+      const shelter = await userModel.findOne({email});
+      if(!shelter)
+      {
+        return res.status(400).send({error: "Shelter user doesn't exist, please sign up first"});
+      }
+
+      const jwtToken = jwt.sign(
+        { email: shelter.email, id: shelter._id, role:'pawpal_admin'},
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+      return res.status(200).send({ message: "Login successful", user: shelter, token: jwtToken });
+    }
     const user = await userModel.findOne({ email });
     if (!user) {
       return res.status(400).send({ error: "User doesn't exist, please sign up first" });
