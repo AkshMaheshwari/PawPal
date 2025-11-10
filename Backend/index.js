@@ -34,6 +34,10 @@ app.use("/api/requests", AdoptionRequestRouter); // ✅ Added new route
 app.use("/contact", ContactRouter); // Contact route
 app.use("/api/donate", DonateRouter); // Donate route
 
+
+app.get("/", (req, res) =>{
+  res.send("Welcome to PawPal Backend!");
+})
 // start server
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);
