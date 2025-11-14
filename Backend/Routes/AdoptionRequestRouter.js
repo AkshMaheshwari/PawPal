@@ -3,6 +3,7 @@ import {
   submitAdoptionRequest,
   getAllRequests,
   updateRequestStatus,
+  getRequestById,
 } from "../Controllers/AdoptionRequestController.js";
 import { validateAdoptionRequest } from "../Middlewares/ValidateAdoptionRequest.js";
 
@@ -14,7 +15,10 @@ router.post("/", validateAdoptionRequest, submitAdoptionRequest);
 // GET /api/requests - Get all adoption requests
 router.get("/", getAllRequests);
 
-// PUT /api/requests/:id/status - Update request status
+// GET /api/requests/:id - Get a specific adoption request
+router.get("/:id", getRequestById);
+
+// PUT /api/requests/:id/status/:status - Update request status
 router.put("/:id/status", updateRequestStatus);
 
 export default router;

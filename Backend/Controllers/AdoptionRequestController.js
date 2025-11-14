@@ -1,5 +1,6 @@
 import AdoptionRequest from "../Models/AdoptionRequests.js";
-import Pet from "../Models/Pet.js"; // Adjust path based on your project structure
+import Pet from "../Models/Pet.js";
+import mongoose from "mongoose";
 
 export const submitAdoptionRequest = async (req, res) => {
   try {
@@ -37,7 +38,7 @@ export const submitAdoptionRequest = async (req, res) => {
 export const getAllRequests = async (req, res) => {
   try {
     const requests = await AdoptionRequest.find()
-      .populate('pet') // This will include full pet details
+      .populate('pet')
       .sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: requests });
   } catch (error) {
@@ -49,23 +50,52 @@ export const getAllRequests = async (req, res) => {
 export const updateRequestStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status } = req.body; // ✅ Fixed - removed .status
 
     const updated = await AdoptionRequest.findByIdAndUpdate(
       id,
       { status },
       { new: true }
-    ).populate('pet'); // Populate pet details in response
+    ).populate('pet');
 
-    if (!updated)
+    if (!updated) {
       return res.status(404).json({ 
         success: false, 
         message: "Request not found" 
       });
+    }
 
     res.status(200).json({ success: true, data: updated });
   } catch (error) {
     console.error("Error updating request status:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const getRequestById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false, 
+        message: "Invalid request ID format"
+      });
+    }
+    
+    const request = await AdoptionRequest.findById(id).populate('pet');
+    
+    if (!request) {
+      return res.status(404).json({
+        success: false, 
+        message: "Request not found"
+      });
+    }
+    
+    res.status(200).json({ success: true, data: request });
+  } catch (error) {
+    console.error("Error fetching request by ID:", error);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };

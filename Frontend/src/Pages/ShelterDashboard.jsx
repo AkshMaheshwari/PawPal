@@ -75,7 +75,8 @@ const ShelterDashboard = () => {
         `${import.meta.env.VITE_BACKEND_URL}/api/requests/${requestId}/status`,
         {
           method: "PUT",
-          headers
+          headers,
+          body: JSON.stringify({ status: action === "approve" ? "approved" : "rejected" }) // ✅ Add this line!
         }
       );
 
